@@ -1,0 +1,37 @@
+[
+  {
+    "Id": 1,
+    "name": "Website Redesign",
+    "description": "Complete overhaul of company website with modern design and improved user experience",
+    "createdAt": "2024-01-15T10:00:00Z",
+    "color": "#5B21B6"
+  },
+  {
+    "Id": 2,
+    "name": "Mobile App Development",
+    "description": "Native mobile application for iOS and Android platforms with core features",
+    "createdAt": "2024-01-20T14:30:00Z",
+    "color": "#EC4899"
+  },
+  {
+    "Id": 3,
+    "name": "Marketing Campaign",
+    "description": "Q1 digital marketing campaign across social media and email channels",
+    "createdAt": "2024-02-01T09:15:00Z",
+    "color": "#10B981"
+  },
+  {
+    "Id": 4,
+    "name": "API Integration",
+    "description": "Integration with third-party APIs for enhanced functionality and data sync",
+    "createdAt": "2024-02-05T11:45:00Z",
+    "color": "#3B82F6"
+  },
+  {
+    "Id": 5,
+    "name": "Database Migration",
+    "description": "Migration from legacy database to new cloud-based solution",
+    "createdAt": "2024-02-10T16:20:00Z",
+    "color": "#F59E0B"
+  }
+]
