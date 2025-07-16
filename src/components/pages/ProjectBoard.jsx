@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import Header from "@/components/organisms/Header";
 import KanbanBoard from "@/components/organisms/KanbanBoard";
+import TimelineView from "@/components/organisms/TimelineView";
 import TaskModal from "@/components/organisms/TaskModal";
 import FilterBar from "@/components/molecules/FilterBar";
 import Loading from "@/components/ui/Loading";
@@ -15,9 +16,10 @@ const ProjectBoard = () => {
   const { projectId } = useParams();
   const { projects, loading: projectsLoading, error: projectsError } = useProjects();
   const { tasks, loading: tasksLoading, error: tasksError } = useTasks(projectId);
-  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showTimeline, setShowTimeline] = useState(false);
   const [filters, setFilters] = useState({
     status: "all",
     priority: "all",
@@ -42,6 +44,10 @@ const ProjectBoard = () => {
 
   const handleSearch = (term) => {
     setSearchTerm(term);
+};
+
+  const handleToggleTimeline = (timeline) => {
+    setShowTimeline(timeline);
   };
 
   if (projectsLoading || tasksLoading) {
@@ -69,7 +75,7 @@ const ProjectBoard = () => {
         <FilterBar onFilterChange={handleFilterChange} filters={filters} />
       </div>
 
-      <div className="flex-1 overflow-hidden">
+<div className="flex-1 overflow-hidden">
         {tasks.length === 0 ? (
           <Empty
             icon="Kanban"
@@ -79,10 +85,21 @@ const ProjectBoard = () => {
             onAction={handleCreateTask}
           />
         ) : (
-          <KanbanBoard
-            projectId={projectId}
-            onTaskClick={handleTaskClick}
-          />
+          <div className="space-y-6">
+            <KanbanBoard
+              projectId={projectId}
+              onTaskClick={handleTaskClick}
+              showTimeline={showTimeline}
+              onToggleTimeline={handleToggleTimeline}
+            />
+            
+            {showTimeline && (
+              <TimelineView
+                projectId={projectId}
+                onTaskClick={handleTaskClick}
+              />
+            )}
+          </div>
         )}
       </div>
 

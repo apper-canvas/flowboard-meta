@@ -3,14 +3,14 @@ import { motion } from "framer-motion";
 import { format } from "date-fns";
 import Card from "@/components/atoms/Card";
 import Badge from "@/components/atoms/Badge";
+import Button from "@/components/atoms/Button";
 import PriorityBadge from "@/components/molecules/PriorityBadge";
 import ApperIcon from "@/components/ApperIcon";
 import { useTasks } from "@/hooks/useTasks";
 
-const KanbanBoard = ({ projectId, onTaskClick }) => {
+const KanbanBoard = ({ projectId, onTaskClick, showTimeline, onToggleTimeline }) => {
   const { tasks, loading, updateTask } = useTasks(projectId);
   const [draggedTask, setDraggedTask] = useState(null);
-
   const columns = [
     { id: "todo", title: "To Do", color: "bg-gray-100", count: 0 },
     { id: "in-progress", title: "In Progress", color: "bg-blue-100", count: 0 },
@@ -105,8 +105,33 @@ const KanbanBoard = ({ projectId, onTaskClick }) => {
     );
   }
 
-  return (
-    <div className="flex gap-6 p-6 h-full overflow-x-auto">
+return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between px-6 pt-6">
+        <h2 className="text-lg font-semibold text-gray-900">Project Board</h2>
+        <div className="flex items-center gap-2">
+          <Button
+            variant={!showTimeline ? "primary" : "secondary"}
+            size="sm"
+            onClick={() => onToggleTimeline(false)}
+            className="flex items-center gap-2"
+          >
+            <ApperIcon name="Kanban" size={16} />
+            Kanban
+          </Button>
+          <Button
+            variant={showTimeline ? "primary" : "secondary"}
+            size="sm"
+            onClick={() => onToggleTimeline(true)}
+            className="flex items-center gap-2"
+          >
+            <ApperIcon name="Calendar" size={16} />
+            Timeline
+          </Button>
+        </div>
+      </div>
+      
+      <div className="flex gap-6 px-6 h-full overflow-x-auto">
       {columnsWithCounts.map((column) => (
         <div
           key={column.id}
@@ -130,7 +155,8 @@ const KanbanBoard = ({ projectId, onTaskClick }) => {
               ))}
           </div>
         </div>
-      ))}
+))}
+      </div>
     </div>
   );
 };

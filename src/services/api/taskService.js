@@ -24,7 +24,7 @@ class TaskService {
     return this.tasks.filter(t => t.projectId === parseInt(projectId));
   }
 
-  async create(taskData) {
+async create(taskData) {
     await this.delay();
     const newTask = {
       ...taskData,
@@ -32,6 +32,8 @@ class TaskService {
       createdAt: new Date().toISOString(),
       completedAt: null,
       projectId: parseInt(taskData.projectId),
+      startDate: taskData.startDate || new Date().toISOString(),
+      dependencies: taskData.dependencies || []
     };
     this.tasks.push(newTask);
     return { ...newTask };
@@ -44,10 +46,12 @@ class TaskService {
       throw new Error("Task not found");
     }
     
-    const updatedTask = { 
+const updatedTask = { 
       ...this.tasks[index], 
       ...taskData,
-      completedAt: taskData.status === "done" ? new Date().toISOString() : null
+      completedAt: taskData.status === "done" ? new Date().toISOString() : null,
+      startDate: taskData.startDate || this.tasks[index].startDate || new Date().toISOString(),
+      dependencies: taskData.dependencies || this.tasks[index].dependencies || []
     };
     
     this.tasks[index] = updatedTask;
